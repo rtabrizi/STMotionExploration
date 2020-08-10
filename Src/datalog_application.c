@@ -218,7 +218,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     	sprintf( dataOut, "\n\rr: %d.%03d, theta: %d.%0.3d, phi: %d.%0.3d",
     			(int) d1, (int) d2, (int) d3, (int) d4, (int) d5, (int) d6 );*/
 
-    	CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
+    	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
     	sprintf( dataOut, "\n\r%d, %d, %d",
     			acceleration.AXIS_X, acceleration.AXIS_Y, acceleration.AXIS_Z);
     	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
@@ -344,9 +344,10 @@ void Gyro_Sensor_Handler( void *handle )
     	abs_acc2 += ((int)angular_velocity.AXIS_Z * (int)angular_velocity.AXIS_Z);
     	abs_acc2 = sqrt((float) abs_acc2);*/
 
+
       sprintf( dataOut, ", %d, %d, %d *******",
     		  (int)angular_velocity.AXIS_X, (int)angular_velocity.AXIS_Y, (int)angular_velocity.AXIS_Z);
-      CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
+      //CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
 
       if ( verbose == 1 )
       {
