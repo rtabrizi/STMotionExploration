@@ -173,13 +173,14 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
   uint8_t who_am_i;
   float odr;
   float fullScale;
-  float r, theta, phi;
+  float r;
+  //float r, theta, phi;
   float x, y, z;
   uint8_t id;
   SensorAxes_t acceleration;
   uint8_t status;
   int32_t d1, d2, d3, d4, d5, d6;
-  const float RADIAN = 57.2957795;
+  //const float RADIAN = 57.2957795;
   
   uint32_t tau = 5000;
   float z_thresh = 800.0f;
@@ -205,21 +206,21 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     	y = (float) acceleration.AXIS_Y;
     	z = (float) acceleration.AXIS_Z;
 
-    	//Convert Cartesian representation of acceleration components to polar coordinate components
+    	/*//Convert Cartesian representation of acceleration components to polar coordinate components
     	r = sqrt(x*x + y*y + z*z);
     	theta  = acos(z/r)*RADIAN;
-    	phi= atan2(y,x)*RADIAN;
+    	phi= atan2(y,x)*RADIAN;*/
 
     	//Convert floating point values to integer for compatibility with USB serial transport.
     	floatToInt(r, &d1, &d2, 3);
-    	floatToInt(theta, &d3, &d4, 3);
+    	/*floatToInt(theta, &d3, &d4, 3);
     	floatToInt(phi, &d5, &d6, 3);
-    	/*sprintf( dataOut, "\n\rr: %d.%03d, theta: %d.%0.3d, phi: %d.%0.3d",
+    	sprintf( dataOut, "\n\rr: %d.%03d, theta: %d.%0.3d, phi: %d.%0.3d",
     			(int) d1, (int) d2, (int) d3, (int) d4, (int) d5, (int) d6 );*/
 
     	CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
-    	sprintf( dataOut, "\n\r%d, %d, %d, %d.%0.3d",
-    			acceleration.AXIS_X, acceleration.AXIS_Y, acceleration.AXIS_Z, (int)d1, (int)d2);
+    	sprintf( dataOut, "\n\r%d, %d, %d",
+    			acceleration.AXIS_X, acceleration.AXIS_Y, acceleration.AXIS_Z);
     	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
 
     	//Transmit some information about the current A_z value and the state tracking variables
@@ -229,7 +230,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
 
     	CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
 
-    	//State machine implementation is here
+    	/*//State machine implementation is here
     	if((*state == 0) && (z < -z_thresh) && ((msTick - *msTickStateChange) > tau))
     	{
     		*state = 1;
@@ -253,7 +254,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     	{
     		*state = 0;
     		*msTickStateChange = msTick;
-    	}
+    	}*/
 
 
 
@@ -311,7 +312,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
 * @param  handle the device handle
 * @retval None
 */
-/*void Gyro_Sensor_Handler( void *handle )
+void Gyro_Sensor_Handler( void *handle )
 {
   
   uint8_t who_am_i;
@@ -337,14 +338,14 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     
     if(SendOverUSB) //Write data on the USB
     {
-    	uint32_t abs_acc2;
+    	/*uint32_t abs_acc2;
     	abs_acc2 = ((int)angular_velocity.AXIS_X * (int)angular_velocity.AXIS_X);
     	abs_acc2 += ((int)angular_velocity.AXIS_Y * (int)angular_velocity.AXIS_Y);
     	abs_acc2 += ((int)angular_velocity.AXIS_Z * (int)angular_velocity.AXIS_Z);
-    	abs_acc2 = sqrt((float) abs_acc2);
+    	abs_acc2 = sqrt((float) abs_acc2);*/
 
-      sprintf( dataOut, "\n\rGYR_X: %d, GYR_Y: %d, GYR_Z: %d, |GYR|: %d",
-    		  (int)angular_velocity.AXIS_X, (int)angular_velocity.AXIS_Y, (int)angular_velocity.AXIS_Z, (int)abs_acc2 );
+      sprintf( dataOut, ", %d, %d, %d *******",
+    		  (int)angular_velocity.AXIS_X, (int)angular_velocity.AXIS_Y, (int)angular_velocity.AXIS_Z);
       CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
 
       if ( verbose == 1 )
@@ -392,7 +393,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
       res = f_write(&MyFile, dataOut, size, (void *)&byteswritten);
     }
   }
-}*/
+}
 
 
 

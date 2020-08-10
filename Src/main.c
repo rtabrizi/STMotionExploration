@@ -184,7 +184,7 @@ int main( void )
       
       Accelero_Sensor_Handler( LSM6DSM_X_0_handle, msTick, &msTickStateChange, &state );
       
-      //Gyro_Sensor_Handler( LSM6DSM_G_0_handle );
+      Gyro_Sensor_Handler( LSM6DSM_G_0_handle );
       
       //Magneto_Sensor_Handler( LSM303AGR_M_0_handle );
       
