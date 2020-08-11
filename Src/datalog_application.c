@@ -137,7 +137,7 @@ void DATALOG_SD_NewLine(void)
 * @param  None
 * @retval None
 */
-void RTC_Handler( RTC_HandleTypeDef *RtcHandle )
+/*void RTC_Handler( RTC_HandleTypeDef *RtcHandle )
 {
   uint8_t subSec = 0;
   RTC_DateTypeDef sdatestructureget;
@@ -147,17 +147,35 @@ void RTC_Handler( RTC_HandleTypeDef *RtcHandle )
   HAL_RTC_GetDate( RtcHandle, &sdatestructureget, FORMAT_BIN );
   subSec = (((((( int )RTC_SYNCH_PREDIV) - (( int )stimestructure.SubSeconds)) * 100) / ( RTC_SYNCH_PREDIV + 1 )) & 0xff );
   
-  if(SendOverUSB) /* Write data on the USB */
+  if(SendOverUSB) // Write data on the USB
   {
-    /*sprintf( dataOut, "\nTimeStamp: %02d:%02d:%02d.%02d", stimestructure.Hours, stimestructure.Minutes, stimestructure.Seconds, subSec );*/
+    sprintf( dataOut, "\nTimeStamp: %02d:%02d:%02d.%02d", stimestructure.Hours, stimestructure.Minutes, stimestructure.Seconds, subSec );
     CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
   }
-  else if(SD_Log_Enabled) /* Write data to the file on the SDCard */
+  else if(SD_Log_Enabled) // Write data to the file on the SDCard
   {
     uint8_t size;
     size = sprintf( dataOut, "%02d:%02d:%02d.%02d\t", stimestructure.Hours, stimestructure.Minutes, stimestructure.Seconds, subSec);    
     res = f_write(&MyFile, dataOut, size, (void *)&byteswritten);
   }
+}*/
+
+void RTC_Handler( RTC_HandleTypeDef *RtcHandle)
+{
+  //if(HAL_GetTick()%5000 == 0)
+  //{
+	  if(SendOverUSB) // Write data on the USB
+	    {
+	      sprintf( dataOut, "\n%d, ", HAL_GetTick());
+	      CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
+	    }
+	    else if(SD_Log_Enabled) // Write data to the file on the SDCard
+	    {
+	      uint8_t size;
+	      size = sprintf( dataOut, "\n%d, ", HAL_GetTick());
+	      res = f_write(&MyFile, dataOut, size, (void *)&byteswritten);
+	    }
+  //}
 }
 
 
@@ -219,7 +237,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     			(int) d1, (int) d2, (int) d3, (int) d4, (int) d5, (int) d6 );*/
 
     	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
-    	sprintf( dataOut, "\n\r%d, %d, %d",
+    	sprintf( dataOut, "\r%d, %d, %d",
     			acceleration.AXIS_X, acceleration.AXIS_Y, acceleration.AXIS_Z);
     	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
 
@@ -345,9 +363,9 @@ void Gyro_Sensor_Handler( void *handle )
     	abs_acc2 = sqrt((float) abs_acc2);*/
 
 
-      sprintf( dataOut, ", %d, %d, %d *******",
+      sprintf( dataOut, ", %d, %d, %d\n",
     		  (int)angular_velocity.AXIS_X, (int)angular_velocity.AXIS_Y, (int)angular_velocity.AXIS_Z);
-      //CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
+      CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
 
       if ( verbose == 1 )
       {

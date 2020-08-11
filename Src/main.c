@@ -162,7 +162,6 @@ int main( void )
   enableAllSensors();
   
   BSP_ACCELERO_Set_FS_Value( LSM6DSM_X_0_handle , 4.0f);
-  
   while (1)
   {
     /* Get sysTick value and check if it's time to execute the task */
@@ -180,7 +179,7 @@ int main( void )
         BSP_LED_On(LEDSWD);
       }
 #endif      
-      RTC_Handler( &RtcHandle );
+      RTC_Handler( &RtcHandle);
       
       Accelero_Sensor_Handler( LSM6DSM_X_0_handle, msTick, &msTickStateChange, &state );
       
