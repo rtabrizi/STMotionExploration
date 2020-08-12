@@ -166,7 +166,7 @@ void RTC_Handler( RTC_HandleTypeDef *RtcHandle)
   //{
 	  if(SendOverUSB) // Write data on the USB
 	    {
-	      sprintf( dataOut, "\n%d, ", HAL_GetTick());
+	      sprintf( dataOut, "\r%d, ", HAL_GetTick());
 	      CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
 	    }
 	    else if(SD_Log_Enabled) // Write data to the file on the SDCard
@@ -220,9 +220,9 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     {
     	//conver the int32 data type into float data type to enable floating point computation
     	//Store float variable in respective variables
-    	x = (float) acceleration.AXIS_X;
-    	y = (float) acceleration.AXIS_Y;
-    	z = (float) acceleration.AXIS_Z;
+    	//x = (float) acceleration.AXIS_X;
+    	//y = (float) acceleration.AXIS_Y;
+    	//z = (float) acceleration.AXIS_Z;
 
     	/*//Convert Cartesian representation of acceleration components to polar coordinate components
     	r = sqrt(x*x + y*y + z*z);
@@ -237,7 +237,7 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     			(int) d1, (int) d2, (int) d3, (int) d4, (int) d5, (int) d6 );*/
 
     	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
-    	sprintf( dataOut, "\r%d, %d, %d",
+    	sprintf( dataOut, "%d, %d, %d",
     			acceleration.AXIS_X, acceleration.AXIS_Y, acceleration.AXIS_Z);
     	//CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
 
@@ -254,20 +254,17 @@ void Accelero_Sensor_Handler( void *handle, uint32_t msTick, uint32_t *msTickSta
     		*state = 1;
     		*msTickStateChange = msTick;
     	}
-
     	else if((*state == 1) && (z > z_thresh) && ((msTick - *msTickStateChange) > tau))
     	{
     		*state = 2;
     		*msTickStateChange = msTick;
     	}
-
     	else if((*state == 2) && ((msTick - *msTickStateChange) < tau))
     	{
     		sprintf( dataOut, "\n\n\r\t\tFlipping Gesture Detected!\n");
     		CDC_Fill_Buffer((uint8_t *)dataOut, strlen(dataOut));
     		SendOverUSB = 0;
     	}
-
     	else if( (msTick - *msTickStateChange) > tau)
     	{
     		*state = 0;
@@ -715,7 +712,6 @@ void Gyro_Sensor_Handler( void *handle )
       voltage= 0.0f;
       soc= 0.0f;
     }
-
     // Read the Gas Gauge Status
     if ( BSP_GG_GetVoltage(handle, &voltage) == COMPONENT_ERROR )
     {

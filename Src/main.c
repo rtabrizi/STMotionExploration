@@ -178,7 +178,8 @@ int main( void )
       {
         BSP_LED_On(LEDSWD);
       }
-#endif      
+#endif
+
       RTC_Handler( &RtcHandle);
       
       Accelero_Sensor_Handler( LSM6DSM_X_0_handle, msTick, &msTickStateChange, &state );
