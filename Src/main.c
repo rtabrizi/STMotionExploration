@@ -54,7 +54,7 @@
 /* Private define ------------------------------------------------------------*/
 
 /* Data acquisition period [ms] */
-#define DATA_PERIOD_MS (100)
+#define DATA_PERIOD_MS (20)
 //#define NOT_DEBUGGING
 
 /* Private macro -------------------------------------------------------------*/
@@ -161,7 +161,7 @@ int main( void )
   initializeAllSensors();
   enableAllSensors();
   
-  BSP_ACCELERO_Set_FS_Value( LSM6DSM_X_0_handle , 4.0f);
+  BSP_ACCELERO_Set_FS_Value( LSM6DSM_X_0_handle , 104.0f);
   while (1)
   {
     /* Get sysTick value and check if it's time to execute the task */
