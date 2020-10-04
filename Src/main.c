@@ -54,7 +54,7 @@
 /* Private define ------------------------------------------------------------*/
 
 /* Data acquisition period [ms] */
-#define DATA_PERIOD_MS (20)
+#define DATA_PERIOD_MS (5) //Try out 5.
 //#define NOT_DEBUGGING
 
 /* Private macro -------------------------------------------------------------*/

@@ -162,20 +162,19 @@ void DATALOG_SD_NewLine(void)
 
 void RTC_Handler( RTC_HandleTypeDef *RtcHandle)
 {
-  //if(HAL_GetTick()%5000 == 0)
-  //{
-	  if(SendOverUSB) // Write data on the USB
-	    {
-	      sprintf( dataOut, "\r%d, ", HAL_GetTick());
-	      CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
-	    }
-	    else if(SD_Log_Enabled) // Write data to the file on the SDCard
-	    {
-	      uint8_t size;
-	      size = sprintf( dataOut, "\n%d, ", HAL_GetTick());
-	      res = f_write(&MyFile, dataOut, size, (void *)&byteswritten);
-	    }
-  //}
+	int subtract = 40000*((int)(HAL_GetTick()/40000));
+
+	if(SendOverUSB) // Write data on the USB
+	{
+		sprintf( dataOut, "\r%d, ", HAL_GetTick()-subtract);
+		CDC_Fill_Buffer(( uint8_t * )dataOut, strlen( dataOut ));
+	}
+	else if(SD_Log_Enabled) // Write data to the file on the SDCard
+	{
+		uint8_t size;
+		size = sprintf( dataOut, "\n%d, ", HAL_GetTick()-subtract);
+		res = f_write(&MyFile, dataOut, size, (void *)&byteswritten);
+	}
 }
 
 
