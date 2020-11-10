@@ -1,0 +1,9 @@
+THINGS TO NOTE
+______________
+
+1. Putty only logs when serial connection is established. That means that it's pretty much impossible to get a 
+timestamp that starts at 0 as I need to click and open and stuff. This means that some data sets start at 3000 and others at 5000.
+
+2. I tried to standardize the data set. The walking and stair ascent has the same leg movement for each type respectivley.
+
+3. I started my actual movement at Timesatmp 10000 for each data set. The rest before 10000 is just idoling for cropping later.
