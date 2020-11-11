@@ -9,4 +9,4 @@ The Group:
 - Ryan Tabrizi
 - Atiksh Rao
 - Michael Davydov
-![gyroX](https://drive.google.com/file/d/1pQDuEisEAL_VyaY7kRpZZJe_gPjWwYYc/view?usp=sharing)
+
