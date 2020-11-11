@@ -10,3 +10,4 @@ The Group:
 - Atiksh Rao
 - Michael Davydov
 
+[Raw Acceleration X Graph]images/(RawAccelX.png)
