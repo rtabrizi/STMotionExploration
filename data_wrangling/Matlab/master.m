@@ -44,6 +44,7 @@ pause;
 fprintf('Plotting Test Data ...\n')
 data = load('normalTrim.csv'); %import dataset
 data2 = load('ascentTrim.csv'); %import dataset
+data3 = load('descentTrim.csv');
 
 
 time = data(:, 1);
@@ -60,12 +61,22 @@ AZ2 = data2(:, 4);
 GX2 = data2(:, 5);
 GY2 = data2(:, 6);
 GZ2 = data2(:, 7);
+%descent
+time3 = data3(:, 1);
+AX3 = data3(:, 2);
+AY3 = data3(:, 3);
+AZ3 = data3(:, 4);
+GX3 = data3(:, 5);
+GY3 = data3(:, 6);
+GZ3 = data3(:, 7);
 %from walkF.txt, dedicate each column to a variable
 figure 
 plot(time, AX); 
 hold on
 plot(time2, AX2); 
 hold on
+plot(time3, AX3); 
+
 title('AccelX ALL vs Time')
 
 %{
@@ -104,6 +115,7 @@ plot(time, AZ);
 hold on
 plot(time2, AZ2); 
 hold on
+plot(time3, AZ3); 
 title(['AccelZ' ...
     ' ALL vs Time'])
 %{
@@ -165,6 +177,7 @@ plot(time, GZ);
 hold on
 plot(time2, GZ2); 
 hold on
+plot(time3, GZ3); 
 title(['GyroZ' ...
     ' ALL vs Time'])
 
