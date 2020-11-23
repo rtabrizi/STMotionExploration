@@ -10,4 +10,4 @@ The Group:
 - Atiksh Rao
 - Michael Davydov
 
-![]images/(RawAccelX.png)
+
