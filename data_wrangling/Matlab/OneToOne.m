@@ -24,7 +24,6 @@
 %
 
 
-
 %% Initialization
 clear ; close all; clc
 % clear anything you might have
@@ -74,6 +73,24 @@ hold on
 plot(time, DescentAccelX); 
 title('AccelX ALL vs Time')
 
+DescentAccelXRange = max(DescentAccelX(:)) - min(DescentAccelX(:));
+m03 = (DescentAccelX - min(DescentAccelX(:))) / DescentAccelXRange;
+mOut3 = 2 * m03 - 1; %descent
+AscentAccelXRange = max(AscentAccelX(:)) - min(AscentAccelX(:));
+m02 = (AscentAccelX - min(AscentAccelX(:))) / max(DescentAccelX(:));
+
+ %ascent
+
+figure
+plot(time, mOut3);
+title('Descent AccelZ [-1 to 1]');
+
+figure
+plot(time, m02);
+hold on
+plot(time, mOut3);
+title('AccelX [-1 to 1]');
+
 
 
 %{
@@ -96,6 +113,12 @@ title('AccelX vs Time')
 figure;
 plot(time, AscentAccelX); 
 title('AccelX2 vs Time')
+
+%}
+
+%{
+
+
 figure 
 plot(time, AY); 
 hold on
@@ -112,76 +135,27 @@ title('AccelY vs Time')
 figure;
 plot(time, AY2);
 title('AccelY2 vs Time')
-%}
-
-
-%{
-
-
-
-
-%}
 
 figure 
-plot(time, NormalAccelZ); 
+plot(time, AZ); 
 hold on
-plot(time, AscentAccelZ); 
+plot(time, AZ2); 
 hold on
-plot(time, DescentAccelZ); 
+plot(time, AZ3); 
 title(['AccelZ' ...
     ' ALL vs Time'])
 
-figure 
-plot(time, NormalGyroY); 
-hold on
-plot(time, AscentGyroY); 
-hold on
-plot(time, DescentGyroY); 
-title(['GyroY' ...
-    ' ALL vs Time'])
-%figure;
-%findpeaks(NormalAccelX,time,'MinPeakDistance',500)
-normalAccelXPeaks = findpeaks(NormalAccelX,time,'MinPeakDistance',1000)
-normalAccelXMean = (mean(normalAccelXPeaks))
-AscentAccelXPeaks = findpeaks(AscentAccelX, time, 'MinPeakDistance', 1000)
-AscentMean = (mean(AscentAccelXPeaks))
-DescentAccelXPeaks = findpeaks(DescentAccelX, time, 'MinPeakDistance', 1000)
-DescentMean = (mean(DescentAccelXPeaks))
-AccelXMeanVector = [normalAccelXMean, AscentMean, DescentMean]
-FixedAccelXMean = AccelXMeanVector / max(AccelXMeanVector(:))
-
-
-normalGyroYPeaks = findpeaks(NormalGyroY,time,'MinPeakDistance',1000)
-normalGyroYMean = (mean(normalGyroYPeaks))
-
-
-%hold on 
-%findpeaks(AscentAccelX, time, 'MinPeakDistance', 500)
-
-AscentGyroYPeaks = findpeaks(AscentGyroY,time,'MinPeakDistance',1000)
-AscentGyroYMean = (mean(AscentGyroYPeaks))
-%hold on 
-%findpeaks(DescentAccelX, time, 'MinPeakDistance', 500)
-
-DescentGyroYPeaks = findpeaks(DescentGyroY,time,'MinPeakDistance',1000)
-DescentGyroYMean = (mean(DescentGyroYPeaks))
-
-GyroYMeanVector = [normalGyroYMean, AscentGyroYMean, DescentGyroYMean]
-
-FixedGyroYMean = GyroYMeanVector / max(GyroYMeanVector(:))
-%confusion matrix
-
-%title('findpeaks test');
+%}
 
 %{
 
 figure;
-plot(time, NormalAccelZ);
+plot(time, AZ);
 title('AccelZ vs Time')
 
 
 figure;
-plot(time, AscentAccelZ);
+plot(time, AZ2);
 title('AccelZ2 vs Time')
 %}
 
@@ -206,7 +180,13 @@ plot(time, GX2);
 title('GryoX2 vs Time')
 
 
-
+figure 
+plot(time, GY); 
+hold on
+plot(time, GY2); 
+hold on
+title(['GyroY' ...
+    ' ALL vs Time'])
 
 
 figure;
@@ -220,29 +200,29 @@ plot(time, GY2);
 title('GyroY2 vs Time')
  
 
+figure 
+plot(time, GZ); 
+hold on
+plot(time, GZ2); 
+hold on
+plot(time, GZ3); 
+title(['GyroZ' ...
+    ' ALL vs Time'])
 
 %}
 
 
-figure 
-plot(time, NormalGyroZ); 
-hold on
-plot(time, AscentGyroZ); 
-hold on
-plot(time, DescentGyroZ); 
-title(['GyroZ' ...
-    ' ALL vs Time'])
 
 %{
 
 figure;
-plot(time, NormalGyroZ);
+plot(time, GZ);
 title('GyroZ vs Time')
 
 
 
 figure;
-plot(time, AscentGyroZ);
+plot(time, GZ2);
 title('GyroZ2 vs Time')
 
 %}
@@ -261,7 +241,7 @@ figure;
 
 
 
-%plot(time, NormalAccelZ);
+%plot(time, AZ);
 %hold on
 
 
@@ -277,7 +257,7 @@ plot(time, GY);
 hold on
 
 
-plot(time, NormalGyroZ);
+plot(time, GZ);
 hold on
 title('All Normal vs Time')
 
@@ -298,7 +278,7 @@ figure;
 
 
 
-%plot(time, NormalAccelZ);
+%plot(time, AZ);
 %hold on
 
 
@@ -316,7 +296,7 @@ plot(time, GY2);
 hold on
 
 
-plot(time, AscentGyroZ);
+plot(time, GZ2);
 hold on
 title('All Ascent vs Time')
 

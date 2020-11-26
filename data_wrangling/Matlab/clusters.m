@@ -38,6 +38,7 @@ AscentGyroZ = data(:, 16);
 DescentGyroZ = data(:, 17);
 NormalGyroZ = data(:, 18);
 time = data(:, 19);
+
 %{
 figure 
 scatter(NormalAccelX, NormalAccelY);
