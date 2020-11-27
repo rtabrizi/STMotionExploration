@@ -27,33 +27,29 @@ DescentGyroZ = data(:, 17);
 NormalGyroZ = data(:, 18);
 time = data(:, 19);
 
+%============AccelX Peaks============%
 
-
-normalAccelXPeaks = findpeaks(NormalAccelX,time,'MinPeakDistance',1000)
-normalAccelXMean = (mean(normalAccelXPeaks))
-AscentAccelXPeaks = findpeaks(AscentAccelX, time, 'MinPeakDistance', 1000)
-AscentMean = (mean(AscentAccelXPeaks))
-DescentAccelXPeaks = findpeaks(DescentAccelX, time, 'MinPeakDistance', 1000)
-DescentMean = (mean(DescentAccelXPeaks))
+normalAccelXPeaks = findpeaks(NormalAccelX,time,'MinPeakDistance',1000);
+normalAccelXMean = (mean(normalAccelXPeaks));
+AscentAccelXPeaks = findpeaks(AscentAccelX, time, 'MinPeakDistance', 1000);
+AscentMean = (mean(AscentAccelXPeaks));
+DescentAccelXPeaks = findpeaks(DescentAccelX, time, 'MinPeakDistance', 1000);
+DescentMean = (mean(DescentAccelXPeaks));
 AccelXMeanVector = [normalAccelXMean, AscentMean, DescentMean]
-FixedAccelXMean = AccelXMeanVector / max(AccelXMeanVector(:))
+f1 = AccelXMeanVector / mean(AccelXMeanVector)
+f1New = f1 - mean(f1)
 
+%============GyroY Peaks============%
 
-normalGyroYPeaks = findpeaks(NormalGyroY,time,'MinPeakDistance',1000)
-normalGyroYMean = (mean(normalGyroYPeaks))
-
-
-
-AscentGyroYPeaks = findpeaks(AscentGyroY,time,'MinPeakDistance',1000)
-AscentGyroYMean = (mean(AscentGyroYPeaks))
-
-
-DescentGyroYPeaks = findpeaks(DescentGyroY,time,'MinPeakDistance',1000)
-DescentGyroYMean = (mean(DescentGyroYPeaks))
-
+normalGyroYPeaks = findpeaks(NormalGyroY,time,'MinPeakDistance',1000);
+normalGyroYMean = (mean(normalGyroYPeaks));
+AscentGyroYPeaks = findpeaks(AscentGyroY,time,'MinPeakDistance',1000);
+AscentGyroYMean = (mean(AscentGyroYPeaks));
+DescentGyroYPeaks = findpeaks(DescentGyroY,time,'MinPeakDistance',1000);
+DescentGyroYMean = (mean(DescentGyroYPeaks));
 GyroYMeanVector = [normalGyroYMean, AscentGyroYMean, DescentGyroYMean]
-
-FixedGyroYMean = GyroYMeanVector / max(GyroYMeanVector(:))
+f2 = GyroYMeanVector / mean(GyroYMeanVector)
+f2New = f2 - mean(f2)
 
 
 
