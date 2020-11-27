@@ -1,21 +1,7 @@
 clear ; close all; clc
-% clear anything you might have
-
-%% ==================== Part 1: Basic Function ====================
-% Complete warmUpExercise.m
-
-
-
-
-
-
-fprintf('Program paused. Starting MCS Press enter to continue.\n');
-pause;
-
-%makes sure nothing half-loads
 
 fprintf('Plotting Test Data ...\n')
-data = load('clusters6.csv'); %import dataset
+data = load('master.csv'); %import dataset
 
 
 
