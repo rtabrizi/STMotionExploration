@@ -31,6 +31,7 @@ hold on
 plot(time, AscentAccelX); 
 hold on
 plot(time, DescentAccelX); 
+legend('NormalAccelX','AscentAccelX','DescentAccelX')
 title('AccelX ALL vs Time')
 
 
@@ -41,6 +42,7 @@ hold on
 plot(time, AscentAccelY); 
 hold on
 plot(time, DescentAccelY); 
+legend('NormalAccelY','AscentAccelY','DescentAccelY')
 title('AccelY ALL vs Time')
 %}
 
@@ -51,6 +53,7 @@ hold on
 plot(time, AscentAccelZ); 
 hold on
 plot(time, DescentAccelZ); 
+legend('NormalAccelZ','AscentAccelZ','DescentAccelZ')
 title(['AccelZ' ...
     ' AccelZ ALL vs Time'])
 
@@ -62,6 +65,7 @@ hold on
 plot(time, AscentGyroX); 
 hold on
 plot(time, DescentGyroX); 
+legend('NormalGyroX','AscentGyroX','DescentGyroX')
 title('GyroX ALL vs Time')
 %}
     
@@ -72,6 +76,7 @@ hold on
 plot(time, AscentGyroY); 
 hold on
 plot(time, DescentGyroY); 
+legend('NormalGyroY','AscentGyroY','DescentGyroY')
 title('GyroY ALL vs Time')
 
 
@@ -81,6 +86,7 @@ hold on
 plot(time, AscentGyroZ); 
 hold on
 plot(time, DescentGyroZ); 
+legend('NormalGyroZ','AscentGyroZ','DescentGyroZ')
 title('GyroZ ALL vs Time')
 
 

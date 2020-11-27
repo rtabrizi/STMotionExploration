@@ -49,6 +49,7 @@ scatter(NormalAccelZ, AscentAccelZ);
 title('AccelX, AccelY, AccelZ [X axis == Normal Gait]');
 
 
+
 %}
 
 figure
