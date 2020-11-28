@@ -76,52 +76,15 @@ second_GZ3 = data(:, 17);
 
 %--------------Graph Comparisons--------------
 
-
-%experiment
-
-figure
-%D = horzcat(GX,GY,GZ); 
-%D = horzcat(GZ,AX,GX); 
-%D = horzcat(GZ,GY,GX); 
-%D = horzcat(AX,GX);
-%D = horzcat(AX,AZ,GX);
-D = horzcat(AX,AZ,GX);
-mesh(D)
-title('D')
+figure 
+plot(time, AX); 
+title('AccelX-1')
 
 figure
-E = horzcat(second_AX,second_AZ,second_GX);
-mesh(E)
-title('E')
+plot(second_time, second_AX); 
+title('AccelX-2')
 
 
-figure
-F = horzcat(AX2,AZ2,GX2);
-mesh(F)
-title('F')
 
-figure
-G = horzcat(second_AX2,second_AZ2,second_GX2);
-mesh(G)
-title('G')
 
-%{
-figure
-F = horzcat(AX3,AZ3,GX3);
-mesh(F)
-title('F')
-%}
 
-%{
-figure
-D = horzcat(GX,GY,GZ); 
-imagesc(D)
-
-figure
-E = horzcat(GX2,GY2,GZ2); 
-imagesc(E)
-
-figure
-F = horzcat(GX3,GY3,GZ3); 
-imagesc(F)
-%}
