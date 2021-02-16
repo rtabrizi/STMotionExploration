@@ -5,8 +5,8 @@ The Group:
 
 - Keshav Vyas
 - Kavin Balakrishnan
-- Ryan Tabrizi
 - Arunan Elamaran
+- Ryan Tabrizi
 - Michael Davydov
 - Atiksh Rao
 
