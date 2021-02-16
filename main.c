@@ -10,10 +10,17 @@
 #include <string.h>
 #include <unistd.h>
 #include <limits.h>
+#include <math.h>
 
 //------------------------------GLOBAL VARIABLES-----------------------------------------
 
 char *directory = "/Users/arunanelamaran/Desktop/STM_Project/DecisionTree/DecisionTree/";
+
+struct Motion Stand;
+struct Motion Normal;
+struct Motion Ascent;
+struct Motion Descent;
+struct Motion New;
 
 
 //------------------------------STRUCTS-----------------------------------------
@@ -53,54 +60,59 @@ int main(int argc, const char * argv[]) {
     normalize("Descent.csv");
     normalize("New.csv");*/
     
-    struct Motion Stand;
-    struct Motion Normal;
-    struct Motion Ascent;
-    struct Motion Descent;
-    struct Motion New;
+    Stand.AX.avg = 1; //take out later
     
     int success;
     success = analyze("StandStill.csv", &Stand)
-            *analyze("Normal.csv", &Normal)
-            *analyze("Ascent.csv", &Ascent)
-            *analyze("Descent.csv", &Descent)
+            *analyze("Normal1.csv", &Normal)
+            *analyze("Ascent1.csv", &Ascent)
+            *analyze("Descent1.csv", &Descent)
             *analyze("New.csv", &New);
     
-    printf("%f\n", Normal.AX.avg);
+    //if(success) { return 0; }
     
-    if(success) { return 0; }
+    printf("\nNormal Avg: %f\n", Normal.AX.absavg);
+    printf("Ascent Avg: %f\n", Ascent.AX.absavg);
+    printf("Descent: %f\n", Descent.AX.absavg);
     
-    if (2==1) { //check if stand still
+    
+    if (2==1)
+    { //check if stand still
         
     }
     
-    else if(New.AX.absavg == Normal.AX.absavg ||
+    else if(//New.AX.absavg == Normal.AX.absavg ||
        (New.AX.absavg < Ascent.AX.absavg && New.AX.absavg < Descent.AX.absavg))
     { //could also do same thing with GZ
-        printf("Normal");
+        printf("Normal\n");
     }
     
     else
     {
         analyzeInfo("New.csv", 3, &(New.AZ), Stand.AZ);
-        analyzeInfo("Ascent.csv", 3, &(Ascent.AZ), Stand.AZ);
-        analyzeInfo("Descent.csv", 3, &(Descent.AZ), Stand.AZ);
+        analyzeInfo("Ascent1.csv", 3, &(Ascent.AZ), Stand.AZ);
+        analyzeInfo("Descent1.csv", 3, &(Descent.AZ), Stand.AZ);
+        
+        printf("\nAscentPeak: %f\n", Ascent.AZ.peakavg);
+        printf("DescentPeak: %f\n", Descent.AZ.peakavg);
+        printf("AscentTrough: %f\n", Ascent.AZ.troughavg);
+        printf("DescentTrough: %f\n\n", Descent.AZ.troughavg);
         
         if(New.AZ.peakavg > Ascent.AZ.peakavg &&
            New.AZ.troughavg > Ascent.AZ.troughavg)
         {
-            printf("Descent");
+            printf("Descent\n");
         }
         
         else if(New.AZ.peakavg < Descent.AZ.peakavg &&
                 New.AZ.troughavg < Descent.AZ.troughavg)
         {
-            printf("Ascent");
+            printf("Ascent\n");
         }
         
         else
         {
-            printf("Unclassifiable motion performed");
+            printf("Unclassifiable motion performed\n");
         }
     }
     
@@ -120,12 +132,12 @@ int analyze(char* filename, struct Motion *motionptr)
     int count = 0;
     int place = 0;
     
-    long AXsum = 0, absAXsum = 0;
-    long AYsum = 0, absAYsum = 0;
-    long AZsum = 0, absAZsum = 0;
-    long GXsum = 0, absGXsum = 0;
-    long GYsum = 0, absGYsum = 0;
-    long GZsum = 0, absGZsum = 0;
+    double AXsum = 0, absAXsum = 0;
+    double AYsum = 0, absAYsum = 0;
+    double AZsum = 0, absAZsum = 0;
+    double GXsum = 0, absGXsum = 0;
+    double GYsum = 0, absGYsum = 0;
+    double GZsum = 0, absGZsum = 0;
     
     char full_directory[500];
     strcpy(full_directory, directory);
@@ -148,37 +160,41 @@ int analyze(char* filename, struct Motion *motionptr)
         
         while(token != NULL)
         {
-            int num = atoi(token); //convert token into num
+            char *needtoconvert;
+            double num = strtod(token, &needtoconvert); //convert token into num
+                        
             switch(place)
             {
                 case 1:
+                    if(strcmp(filename, "StandStill.csv"))
+                        num -= Stand.AX.avg;
                     AXsum += num;
-                    absAXsum += abs(num);
+                    absAXsum += fabs(num);
                     break;
                     
                 case 2:
                     AYsum += num;
-                    absAYsum += abs(num);
+                    absAYsum += fabs(num);
                     break;
                 
                 case 3:
                     AZsum += num;
-                    absAZsum += abs(num);
+                    absAZsum += fabs(num);
                     break;
                     
                 case 4:
                     GXsum += num;
-                    absGXsum += abs(num);
+                    absGXsum += fabs(num);
                     break;
                     
                 case 5:
                     GYsum += num;
-                    absGYsum += abs(num);
+                    absGYsum += fabs(num);
                     break;
                     
                 case 6:
                     GZsum += num;
-                    absGZsum += abs(num);
+                    absGZsum += fabs(num);
                     break;
             }
             
@@ -191,28 +207,28 @@ int analyze(char* filename, struct Motion *motionptr)
         place = 0;
     }
     
-    motionptr->AX.avg = (double)AXsum/count;
-    motionptr->AY.avg = (double)AYsum/count;
-    motionptr->AZ.avg = (double)AZsum/count;
-    motionptr->GX.avg = (double)GXsum/count;
-    motionptr->GY.avg = (double)GYsum/count;
-    motionptr->GZ.avg = (double)GZsum/count;
+    motionptr->AX.avg = AXsum/count;
+    motionptr->AY.avg = AYsum/count;
+    motionptr->AZ.avg = AZsum/count;
+    motionptr->GX.avg = GXsum/count;
+    motionptr->GY.avg = GYsum/count;
+    motionptr->GZ.avg = GZsum/count;
     
-    motionptr->AX.absavg = (double)absAXsum/count;
-    motionptr->AY.absavg = (double)absAYsum/count;
-    motionptr->AZ.absavg = (double)absAZsum/count;
-    motionptr->GX.absavg = (double)absGXsum/count;
-    motionptr->GY.absavg = (double)absGYsum/count;
-    motionptr->GZ.absavg = (double)absGZsum/count;
+    motionptr->AX.absavg = absAXsum/count;
+    motionptr->AY.absavg = absAYsum/count;
+    motionptr->AZ.absavg = absAZsum/count;
+    motionptr->GX.absavg = absGXsum/count;
+    motionptr->GY.absavg = absGYsum/count;
+    motionptr->GZ.absavg = absGZsum/count;
     
     return 1;
 }
 
 int analyzeInfo(char* filename, int place, struct AvgInfo *axisptr, struct AvgInfo still)
 {
-    long peaksum = 0;
+    double peaksum = 0;
     int peakcount = 0;
-    long troughsum = 0;
+    double troughsum = 0;
     int troughcount = 0;
     
     char full_directory[500];
@@ -239,14 +255,15 @@ int analyzeInfo(char* filename, int place, struct AvgInfo *axisptr, struct AvgIn
         {
             if (spot == place)
             {
-                int num = atoi(token); //convert token into num
-                if(num > still.avg)
+                char *needtoconvert;
+                double num = strtod(token, &needtoconvert); //convert token into num
+                if(num > axisptr->avg)
                 {
                     peaksum += num;
                     peakcount++;
                 }
                 
-                else if(num < still.avg)
+                else if(num < axisptr->avg)
                 {
                     troughsum += num;
                     troughcount++;
@@ -257,8 +274,8 @@ int analyzeInfo(char* filename, int place, struct AvgInfo *axisptr, struct AvgIn
         }
     }
     
-    axisptr->peakavg = (double)peaksum/peakcount;
-    axisptr->troughavg = (double)troughsum/troughcount;
+    axisptr->peakavg = peaksum/peakcount;
+    axisptr->troughavg = troughsum/troughcount;
     
     return 1;
 }
