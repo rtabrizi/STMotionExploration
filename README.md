@@ -23,4 +23,4 @@ The folders and their purpose:
 The final SensorTile SystemWorkbench algorithm is stored in [this repository](https://github.com/codeboss123/STM_Walk_Motion_Classification).
 
 
-[Draft](https://docs.google.com/document/d/1rxYGlyEkDnYLEWZdulQaJeqwKm3KmoQd8krIPucXlYc/edit?usp=sharing)
+Our research paper is linked [here](https://docs.google.com/document/d/1rxYGlyEkDnYLEWZdulQaJeqwKm3KmoQd8krIPucXlYc/edit?usp=sharing).
